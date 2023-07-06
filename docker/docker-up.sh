@@ -1,0 +1,1 @@
+docker exec -ti docker_php82_1 bash

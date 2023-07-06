@@ -1,0 +1,62 @@
+version: '3.8'
+
+services:
+    apache:
+        build:
+              context: ./apache
+              dockerfile: Dockerfile
+        volumes:
+              - ./../frontend:/usr/local/apache2/htdocs
+        ports:
+              - 8080:8080
+        networks:
+              - develop
+              - devel   
+
+    php82:
+          build:
+                context: ./php82
+                dockerfile: Dockerfile
+          environment:
+                APP_ENV: 
+                #DATABASE_URL: mysql://root:@mysql:3306/symfony_db?serverVersion=5.7
+          volumes:
+                - ./../backend:/app/
+          ports:
+              - 8082:8000
+          networks:
+                - develop
+          depends_on:
+                - mysql
+
+    mysql:
+          image: mysql
+          command: ['--character-set-server=utf8mb4', '--collation-server=utf8mb4_unicode_ci', '--default-authentication-plugin=mysql_native_password']
+          environment:
+              MYSQL_DATABASE: default
+              MYSQL_ALLOW_EMPTY_PASSWORD: 1
+          ports:
+              - 3306:3306
+          volumes:
+              - ./../mysql/data:/var/lib/mysql
+          networks:
+              - develop
+          command: --lower_case_table_names=0
+
+    db:
+        image: postgres
+        restart: always
+        ports:
+              - 5433:5432
+        environment:
+          POSTGRES_PASSWORD: example
+        networks:
+              - develop
+        volumes:
+              - ./database:/var/lib/postgresql-docker
+
+networks:
+    develop:
+
+    devel:
+        
