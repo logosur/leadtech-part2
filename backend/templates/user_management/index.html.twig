@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}User Management{% endblock %}
+
+{% block body %}
+    <h1>User Management</h1>
+    
+    {% if userForm.vars.submitted %}
+        {% if userId %}
+            <p>User ID: {{userId}}</p>
+        {% endif %}
+    {% endif %}
+    {{ form_errors(userForm) }}
+
+    {{ form_start(userForm) }}
+        {{ form_row(userForm.email, {
+            label: 'Email'
+        }) }}
+        {{ form_row(userForm.name, {
+            label: 'Name'
+        }) }}
+        <button type="submit" class="btn">Send</button>
+    {{ form_end(userForm) }}
+{% endblock %}
