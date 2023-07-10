@@ -4,14 +4,29 @@ namespace App\Dto;
 
 use App\ValueObject\Email;
 
+/**
+ * UserDto sample for this evaluation exercise.
+ */
 class UserDto
 {
+    /**
+     * @var int|null $id
+     */
     private ?int $id = null;
 
+    /**
+     * @var string|null $name
+     */
     private ?string $name = null;
 
+    /**
+     * @var Email|null $email
+     */
     private ?Email $email = null;
 
+    /**
+     * @return int|null
+     */
     public function getId(): ?int
     {
         return $this->id;
@@ -26,11 +41,18 @@ class UserDto
 		return $this;
 	}
 
+    /**
+     * @return string|null
+     */
     public function getName(): ?string
     {
         return $this->name;
     }
 
+    /**
+     * @param string $name
+     * @return UserDto
+     */
     public function setName(string $name): static
     {
         $this->name = $name;
@@ -38,11 +60,18 @@ class UserDto
         return $this;
     }
 
+    /**
+     * @return Email|null
+     */
     public function getEmail(): ?Email
     {
         return $this->email;
     }
 
+    /**
+     * @param \App\ValueObject\Email $email
+     * @return UserDto
+     */
     public function setEmail(Email $email): static
     {
         $this->email = $email;

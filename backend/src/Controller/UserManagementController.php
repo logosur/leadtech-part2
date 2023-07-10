@@ -15,14 +15,14 @@ use App\Transformer\UserTransformer;
 class UserManagementController extends AbstractController
 {
     /*
-     * Api para edición de datos de profile de usario para la versión frontend de Symfony/Twig.
+     * Manage custom user form.
      */
     #[Route('/user', name: 'app_user')]
     public function index(
         Request $request,
         UserPasswordHasherInterface $userPasswordHasher,
-        EntityManagerInterface $entityManager,
         UserManagement $userManagement,
+        EntityManagerInterface $entityManager
     ): Response
     {
         $userId = null;
@@ -32,9 +32,9 @@ class UserManagementController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $userDto = UserTransformer::formToDto($form);
-            $userDto = $userManagement->addOrUpdate($userDto);
-            $userId = $userDto->getId();
+            $user = UserTransformer::formToUser($form);
+            $user = $userManagement->addOrUpdateByEmail($user);
+            $userId = $user->getId();
         }
 
         return $this->render('user_management/index.html.twig', [

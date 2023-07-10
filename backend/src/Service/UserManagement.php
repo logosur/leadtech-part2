@@ -12,15 +12,12 @@ class UserManagement
 {
     private EntityManagerInterface $em;
 
-    private UserPasswordHasherInterface $userPasswordHasher;
-    
-    public function __construct(EntityManagerInterface $em, UserPasswordHasherInterface $userPasswordHasherInterface)
+    public function __construct(EntityManagerInterface $em)
     {
         $this->em = $em;
-        $this->userPasswordHasher = $userPasswordHasherInterface;
     }
 
-    public function addOrUpdate(UserDto $userDto): UserDto
+    public function addOrUpdateByEmailFromDto(UserDto $userDto): UserDto
     {
         $user = $this->em->getRepository(User::class)->findOneBy(['email' => $userDto->getEmail()->getAddress()]);
 
@@ -45,5 +42,35 @@ class UserManagement
         $userDto = UserTransformer::fromUserToDto($user);
 
         return $userDto;
+    }
+
+    /**
+     * Add or update a user from a User input.
+     * @param User $user
+     * @return UserDto
+     */
+    public function addOrUpdateByEmail(User $user): User
+    {
+        $curUser = $this->em->getRepository(User::class)->findOneBy(['email' => $user->getEmail()]);
+
+        if (!$curUser) {
+            $curUser = new User();
+            $curUser->setEmail($user->getEmail());
+            $curUser->setName($user->getName());
+            $curUser->setPassword(
+                crypt(
+                    $curUser->getEmail(),
+                    microtime() . uniqid()
+                )
+            );
+        } else {
+            $curUser->setEmail($user->getEmail());
+            $curUser->setName($user->getName());
+        }
+
+        $this->em->persist($curUser);
+        $this->em->flush();
+
+        return $curUser;
     }
 }

@@ -4,12 +4,13 @@
 
 {% block body %}
     <h1>User Management</h1>
-    
+    <p id="userId">
     {% if userForm.vars.submitted %}
         {% if userId %}
-            <p>User ID: {{userId}}</p>
+            User ID: {{userId}}
         {% endif %}
     {% endif %}
+    </p>
     {{ form_errors(userForm) }}
 
     {{ form_start(userForm) }}
