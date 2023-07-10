@@ -6,11 +6,6 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class WebTest extends WebTestCase
 {
-    /**
-     * Catch $crawled object to reuse it.
-     * @var 
-     */
-    private $crawler;
 
     /**
      * Test user form structure.
@@ -20,8 +15,8 @@ class WebTest extends WebTestCase
     {
         $client = static::createClient();
         $client->request('GET', $_ENV['FRONT_URL'] . '/user');
-        $this->crawler = $client->getCrawler();
-
+        $crawler = $client->getCrawler();
+        //dump($crawler::class); exit();
         $this->assertResponseIsSuccessful();
         $this->assertSelectorTextNotContains('p#userId', 'User ID:');
         $this->assertSelectorTextContains('form[name="user_management_form"]', 'Email');
@@ -36,13 +31,13 @@ class WebTest extends WebTestCase
     {
         $client = static::createClient();
         $client->request('GET', $_ENV['FRONT_URL'] . '/user');
-        $this->crawler = $client->getCrawler();
+        $crawler = $client->getCrawler();
 
         $this->assertResponseIsSuccessful();
         
-        $form = $this->crawler->selectButton('Send')->form();
+        $form = $crawler->selectButton('Send')->form();
 
-        $this->crawler = $client->submitForm('Send', [
+        $crawler = $client->submitForm('Send', [
             'user_management_form[email]' => 'invalid_email@x',
             'user_management_form[name]' => 'nametest',
         ]);
@@ -59,13 +54,13 @@ class WebTest extends WebTestCase
     {
         $client = static::createClient();
         $client->request('GET', $_ENV['FRONT_URL'] . '/user');
-        $this->crawler = $client->getCrawler();
+        $crawler = $client->getCrawler();
 
         $this->assertResponseIsSuccessful();
         
-        $form = $this->crawler->selectButton('Send')->form();
+        $form = $crawler->selectButton('Send')->form();
 
-        $this->crawler = $client->submitForm('Send', [
+        $crawler = $client->submitForm('Send', [
             'user_management_form[email]' => 'valid@email.com',
             'user_management_form[name]' => 'nametest',
         ]);
@@ -73,5 +68,4 @@ class WebTest extends WebTestCase
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
         $this->assertSelectorTextContains('p#userId', 'User ID:');
     }
-
 }

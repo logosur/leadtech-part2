@@ -10,7 +10,7 @@ use InvalidArgumentException;
 class Email
 {
     /**
-     * @var 
+     * @var string $address
      */
     private $address;
 

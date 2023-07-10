@@ -5,8 +5,6 @@ namespace App\Repository;
 use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
-use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 /**
  * @extends ServiceEntityRepository<User>
@@ -19,22 +17,12 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 class UserRepository extends ServiceEntityRepository
 {
     /**
-     * @var UserPasswordHasherInterface
-     */
-    private UserPasswordHasherInterface $userPasswordHasher;
-    
-    /**
      * @param ManagerRegistry $registry
-     * @param EntityManagerInterface $em
-     * @param UserPasswordHasherInterface $userPasswordHasherInterface
      */
     public function __construct(
-        ManagerRegistry $registry,
-        UserPasswordHasherInterface $userPasswordHasherInterface
+        ManagerRegistry $registry
     )
     {
-        $this->userPasswordHasher = $userPasswordHasherInterface;
-
         parent::__construct($registry, User::class);
     }
 

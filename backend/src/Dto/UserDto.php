@@ -51,7 +51,7 @@ class UserDto
 
     /**
      * @param string $name
-     * @return UserDto
+     * @return static(App\Dto\UserDto)
      */
     public function setName(string $name): static
     {
@@ -69,8 +69,8 @@ class UserDto
     }
 
     /**
-     * @param \App\ValueObject\Email $email
-     * @return UserDto
+     * @param Email $email
+     * @return static(App\Dto\UserDto)
      */
     public function setEmail(Email $email): static
     {

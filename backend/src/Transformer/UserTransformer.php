@@ -5,7 +5,7 @@ namespace App\Transformer;
 use App\Entity\User;
 use App\Dto\UserDto;
 use App\ValueObject\Email;
-use Symfony\Component\Form\Form;
+use Symfony\Component\Form\FormInterface;
 
 /**
  * Transformations from and to UserDto object.
@@ -29,10 +29,10 @@ class UserTransformer
 
     /**
      * Transform submitted form to UserDto.
-     * @param Form $form
+     * @param FormInterface $form
      * @return UserDto
      */
-    public static function formToDto(Form $form): UserDto
+    public static function formToDto(FormInterface $form): UserDto
     {
         $userDto = new UserDto();
         $userDto->setEmail(new Email($form->get('email')->getData()));
@@ -43,10 +43,10 @@ class UserTransformer
 
     /**
      * Transform submitted form to User.
-     * @param Form $form
+     * @param FormInterface $form
      * @return User
      */
-    public static function formToUser(Form $form): User
+    public static function formToUser(FormInterface $form): User
     {
         $userDto = new User();
         $userDto->setEmail($form->get('email')->getData());

@@ -6,7 +6,6 @@ use App\Entity\User;
 use App\Dto\UserDto;
 use App\Transformer\UserTransformer;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class UserManagement
 {
@@ -47,7 +46,7 @@ class UserManagement
     /**
      * Add or update a user from a User input.
      * @param User $user
-     * @return UserDto
+     * @return User
      */
     public function addOrUpdateByEmail(User $user): User
     {

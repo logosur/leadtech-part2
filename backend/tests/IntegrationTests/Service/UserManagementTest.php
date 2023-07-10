@@ -2,7 +2,6 @@
 namespace App\Tests\IntegrationTests\Service;
 
 use App\Service\UserManagement;
-use PHPUnit\Framework\TestCase;
 use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;

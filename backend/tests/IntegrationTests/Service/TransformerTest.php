@@ -1,10 +1,8 @@
 <?php
 namespace App\Tests\IntegrationTests\Service;
 
-use App\ValueObject\Email;
 use PHPUnit\Framework\TestCase;
 use App\Transformer\UserTransformer;
-use App\Dto\UserDto;
 use App\Entity\User;
 
 /**
