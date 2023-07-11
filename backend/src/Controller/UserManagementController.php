@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
-use App\Service\UserManagement;
+use App\Service\UserManagementInterface;
 use App\Transformer\UserTransformer;
 class UserManagementController extends AbstractController
 {
@@ -21,7 +21,7 @@ class UserManagementController extends AbstractController
     public function index(
         Request $request,
         UserPasswordHasherInterface $userPasswordHasher,
-        UserManagement $userManagement,
+        UserManagementInterface $userManagement,
         EntityManagerInterface $entityManager
     ): Response
     {

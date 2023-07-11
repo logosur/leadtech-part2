@@ -7,7 +7,7 @@ use App\Dto\UserDto;
 use App\Transformer\UserTransformer;
 use Doctrine\ORM\EntityManagerInterface;
 
-class UserManagement
+class UserManagement implements UserManagementInterface
 {
     private EntityManagerInterface $em;
 
@@ -16,6 +16,11 @@ class UserManagement
         $this->em = $em;
     }
 
+    /**
+     * Add or update a user from a UserDto input.
+     * @param UserDto $userDto
+     * @return UserDto
+     */
     public function addOrUpdateByEmailFromDto(UserDto $userDto): UserDto
     {
         $user = $this->em->getRepository(User::class)->findOneBy(['email' => $userDto->getEmail()->getAddress()]);
@@ -44,7 +49,7 @@ class UserManagement
     }
 
     /**
-     * Add or update a user from a User input.
+     * Add or update a user from a User input by Email.
      * @param User $user
      * @return User
      */
